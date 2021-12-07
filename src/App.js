@@ -1,42 +1,66 @@
 import React from "react";
 import { useState } from "react";
 import Wrapper from "./components/Wrapper";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 import Display from "./components/Display";
 import Cards from "./components/Cards"
-import cardInfo from "./components/cardInfo.json"
-
+import imageData from "./components/imageData"
+//import pic from "./images/01.JPG"//direct import for test
 function App() {
 
-  const [cards, setCards] = useState({
-    clicked: false });
+  const [cards, setCards] = useState(imageData);
 
   const [score, setScore] = useState({
-    highScore: 0,
-    currentScore: 0,
-  });
+     highScore: 0,
+     currentScore: 0,
+   });
 
   const handleClick = id => {
     shuffleCards();
     updateScore(id);
   }
 
-  const updateScore = id => {
-
-  }
-
-  const shuffleCards = () => {
-    
-    
+  const handleIncrement = () => {
+    setScore(prevScore => prevScore + 1)
   };
 
+  const updateScore = id => {
+    cards.forEach(cards => {
+      if (id === cards.id && cards.clicked === false) {
+        cards.clicked = true;
+        setCards((prevInfo) => {
+          return {...prevInfo, [cards.clicked]: false}
+        })
+        
+        handleIncrement();
+      } else if (id === cards.id && cards.clicked === true) {
+        if (score.currentScore > score.highScore) {
+          setScore((prevInfo) => {
+            return {...prevInfo, [score.highScore]: score.currentScore}
+          })
+          
+        }
+        setScore((prevInfo) => {
+          return {...prevInfo, [score.currentScore]: 0 }
+        })
+        setCards((prevInfo) => {
+          return {...prevInfo, [cards.clicked]: false}
+        })
+      
+      }
+    });
+  };
   
+  const shuffleCards = (e) => {
+    const shuffledArr = shuffle(cards);
+    setCards({ shuffledArr });
+  };
+
   const shuffle = array => {
     var currentIndex = array.length,
       temporaryValue,
       randomIndex;
 
-    
     while (0 !== currentIndex) {
       
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -46,25 +70,31 @@ function App() {
       array[randomIndex] = temporaryValue;
 
     }
-
-    return array;
-    
-  };
+      return array;
+    };
 
   return (
     <Wrapper>
-      <Navbar/>
+      
+      <Header
+        currentScore={score.currentScore}
+        highScore={score.highScore}
+      />
+
       <Display/>
-      <Cards onClick={handleClick}
-             Clicked={cards.clicked}
-             id={cardInfo.id}
-             key={cardInfo.id}
-             name={cardInfo.name}
-             image={cardInfo.image}
-             occupation={cardInfo.occupation}
-             />
-    </Wrapper>
-  );
-}
+      
+      {cards.map(cards => (
+        <Cards 
+          url={cards.url}
+          id={cards.id}
+          clicked={cards.clicked}
+          handleClick={handleClick}
+          key={cards.id}
+          />
+      ))};
+      
+      </Wrapper>
+    );
+};
 
 export default App;

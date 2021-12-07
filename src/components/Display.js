@@ -3,9 +3,9 @@ import React from "react";
 const Display = (props) => {
 
     return(
-        <div className="jumbotron jumbotron-fluid">
-            <div className="container">{props.children}
-                <p className="lead">Get points by clicking on an image but don't click on any more than once!</p>
+        <div className="">
+            <div className="container">
+                <p className="">Get points by clicking on an image but don't click on any more than once!</p>
             </div>
         </div>
     )
