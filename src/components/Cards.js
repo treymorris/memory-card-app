@@ -6,7 +6,7 @@ const Cards = (props) => {
 
 
     return(
-        <div className={"card " + (props.clicked ? "animate" : "")} onClick={() => props.handleClick( props.id)} >  
+        <div className={"card " + (props.clicked ? "animate" : "")} onClick={() => props.handleClick(props)} >  
             <div className="img-container">
                 <img alt={props.name} src={props.url} width="250" height="250"/>
             </div>

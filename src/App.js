@@ -15,45 +15,48 @@ function App() {
      currentScore: 0,
    });
 
-  const handleClick = id => {
+  const handleClick = (clicked, currentScore, highScore) => {
+    console.log("handle click")
     shuffleCards();
-    updateScore(id);
+    //updateScore(clicked, currentScore, highScore);
+    console.log(score.currentScore)
+    console.log(cards);
   }
 
   const handleIncrement = () => {
-    setScore(prevScore => prevScore + 1)
+    setScore((prevScore) => {
+      return {...prevScore, [score.currentScore]: score.currentScore + 1}
+    })
   };
 
-  const updateScore = id => {
-    cards.forEach(cards => {
-      if (id === cards.id && cards.clicked === false) {
-        cards.clicked = true;
-        setCards((prevInfo) => {
-          return {...prevInfo, [cards.clicked]: false}
-        })
-        
-        handleIncrement();
-      } else if (id === cards.id && cards.clicked === true) {
-        if (score.currentScore > score.highScore) {
-          setScore((prevInfo) => {
-            return {...prevInfo, [score.highScore]: score.currentScore}
-          })
-          
-        }
-        setScore((prevInfo) => {
-          return {...prevInfo, [score.currentScore]: 0 }
-        })
-        setCards((prevInfo) => {
-          return {...prevInfo, [cards.clicked]: false}
-        })
-      
-      }
-    });
-  };
+  // const handleHighScore = () => {
+  //  setScore((prevScore) => {
+  //    return {...prevScore, [score.highScore]: score.currentScore}
+  //  })
+  // }
+
+  const updateScore = (clicked, currentScore, highScore) => {
+    console.log("updating score")
   
-  const shuffleCards = (e) => {
+      if (clicked === false) {
+        
+        setCards((prevInfo) => {
+          return {...prevInfo, [clicked]: true}
+        })
+        handleIncrement();
+      } else if (clicked === true) {
+        if (currentScore > highScore) {
+          setScore((prevInfo) => {
+            return {...prevInfo, [highScore]: currentScore}
+          })
+        }
+       }
+    };
+  
+  const shuffleCards = () => {
+    console.log("shuffling")
     const shuffledArr = shuffle(cards);
-    setCards({ shuffledArr });
+    setCards(shuffledArr);
   };
 
   const shuffle = array => {
@@ -83,7 +86,7 @@ function App() {
 
       <Display/>
       
-      {cards.map(cards => (
+      {cards.map((cards) => (
         <Cards 
           url={cards.url}
           id={cards.id}

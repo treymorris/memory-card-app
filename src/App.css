@@ -5,7 +5,8 @@
 .wrapper {
   height: 100%;
   display: flex;
-  justify-content: center;
+  
+  
   overflow: auto;
 }
 
@@ -27,7 +28,7 @@ header h1 {
 
 header nav {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
 }
 
 header p {
