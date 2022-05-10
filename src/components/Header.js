@@ -1,19 +1,19 @@
 import React from "react";
 
 const Header = (props) => {
-    
-    return(
-        <header className="header">
-            <div className="row">
-                <h1 >Memory Game</h1>
-                <nav >
-                    <p>Score: <span>{props.currentScore}</span></p>
-                    <p>High Score: <span>{props.highScore}</span> </p>
-                    {props.children}
-                </nav>
-            </div>
-        </header>     
-    )
+  return (
+    <header className="header">
+      <h1>Memory Game</h1>
+        <div className="scoreDisplay" >
+          <h3>
+            Score: <span>{props.score}</span>
+          </h3>
+          <h3>
+            High Score: <span>{props.highScore}</span>
+          </h3>
+        </div>
+      </header>
+  );
 };
 
 export default Header;
