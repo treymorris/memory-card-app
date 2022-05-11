@@ -10,10 +10,8 @@ import {
   faBurst,
   faStar,
   faDragon,
-  faGhost
+  faGhost,
 } from "@fortawesome/free-solid-svg-icons";
-
-
 
 let CardData = [
   {

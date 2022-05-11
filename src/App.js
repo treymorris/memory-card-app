@@ -8,48 +8,36 @@ import CardData from "./components/CardData";
 
 function App() {
   const [cards, setCards] = useState(CardData);
-  console.log(cards);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
 
   const handleClick = (card) => {
-    //console.log(card)
     shuffleCards();
     handleScore(card);
   };
 
-  // const handleIncrement = () => {
-  //   setScore(prevScore => {
-  //     console.log(score.currentScore)
-  //     return {...prevScore, currentScore: prevScore.currentScore + 1 }
-  //   })
-  // }
-
-  // const handleHighScore = () => {
-  //  setScore((prevScore) => {
-  //    return {...prevScore, [score.highScore]: score.currentScore}
-  //  })
-  // }
-
   const handleScore = (card) => {
-    //console.log(card.clicked)
     if (card.clicked === true) {
-      console.log('true')
       setHighScore(score);
       winMessage();
+      clickedReset()
     } else {
-      setScore(score + 1)
-      const cardToUpdate = cards.findIndex((index) => index.id === card.id)
-      const updatedCards = [...cards]
-      updatedCards[cardToUpdate].clicked = !card.clicked
-      setCards(updatedCards)
+      setScore(score + 1);
+      const cardToUpdate = cards.findIndex((index) => index.id === card.id);
+      const updatedCards = [...cards];
+      updatedCards[cardToUpdate].clicked = !card.clicked;
+      setCards(updatedCards);
     }
   };
+
+  const clickedReset = () => {
+    return cards.map((card) => card.clicked = false)
+  }
 
   const winMessage = () => {
     alert(`Play Again?  High Score is ${score}`);
     setScore(0);
-  }
+  };
 
   const shuffleCards = () => {
     const shuffledArr = shuffle(cards).slice();
@@ -77,11 +65,7 @@ function App() {
       <Display />
       <Wrapper>
         {cards.map((card) => (
-          <Card
-            card={card}
-            handleClick={handleClick}
-            key={card.id}
-          />
+          <Card card={card} handleClick={handleClick} key={card.id} />
         ))}
       </Wrapper>
     </div>
